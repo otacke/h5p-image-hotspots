@@ -22,8 +22,6 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
    * @param {number} id
    */
   function ImageHotspots(options, id) {
-    const self = this;
-
     EventDispatcher.call(this);
 
     // Extend defaults with provided options
@@ -35,13 +33,6 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
       iconType: 'icon',
       icon: 'plus'
     }, options);
-
-    // Sanitize hotspot headers
-    this.options.hotspots.map(function (hotspot) {
-      hotspot.header = self.stripHTML(self.htmlDecode(hotspot.header));
-      return hotspot;
-    });
-
     // Keep provided id.
     this.id = id;
     this.isSmallDevice = false;
@@ -267,31 +258,6 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
     });
 
     self.isSmallDevice = (containerWidth / parseFloat($("body").css("font-size")) < 40);
-  };
-
-  /**
-   * Retrieve true string from HTML encoded string.
-   *
-   * @public
-   * @param {string} input Input string.
-   * @return {string} Output string.
-   */
-  ImageHotspots.prototype.htmlDecode = function (input) {
-    const dparser = new DOMParser().parseFromString(input, 'text/html');
-    return dparser.documentElement.textContent;
-  };
-
-  /**
-   * Retrieve string without HTML tags.
-   *
-   * @public
-   * @param {string} input Input string.
-   * @return {string} Output string.
-   */
-  ImageHotspots.prototype.stripHTML = function (html) {
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent || div.innerText || '';
   };
 
   return ImageHotspots;
