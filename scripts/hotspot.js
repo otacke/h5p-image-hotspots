@@ -32,9 +32,9 @@
 
     // Check if there is an iconImage that should be used instead of fontawesome icons to determine the html element.
     this.$element = $(iconImageExists ? '<img/>' : '<button/>', {
-      'class': 'h5p-image-hotspot ' + 
+      'class': 'h5p-image-hotspot ' +
         (!iconImageExists ? 'h5p-image-hotspot-' + options.icon : '') +
-        (config.position.legacyPositioning ? ' legacy-positioning' : ''),  
+        (config.position.legacyPositioning ? ' legacy-positioning' : ''),
       'role': 'button',
       'tabindex': 0,
       'aria-haspopup': true,
@@ -71,7 +71,7 @@
         }
       }
     });
-    
+
     this.$element.css({
       top: this.config.position.y + '%',
       left: this.config.position.x + '%',
@@ -295,8 +295,19 @@
    * @param {string} title Title to set for hotspot element
    */
   ImageHotspots.Hotspot.prototype.setTitle = function (title) {
+    title = this.htmlDecode(title);
     this.$element.attr('title', title);
     this.$element.attr('aria-label', title);
+  };
+
+  /**
+   * Retrieve true string from HTML encoded string.
+   * @param {string} input Input string.
+   * @return {string} Output string.
+   */
+  ImageHotspots.Hotspot.prototype.htmlDecode = function (input) {
+    const dparser = new DOMParser().parseFromString(input, 'text/html');
+    return dparser.documentElement.textContent;
   };
 
 })(H5P.jQuery, H5P.ImageHotspots);
