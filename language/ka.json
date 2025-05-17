@@ -77,6 +77,10 @@
             "description": "როცა მომხმარებელი დააჭერს hotspot-ს, popup-ი მთლიანად დაფარავს ფონურ სურათს"
           },
           {
+            "label": "Hotspot specific image",
+            "description": "Use your own image for this hotspot's icon.<br />75px by 75px is recommended for your image."
+          },
+          {
             "label": "სათაური",
             "description": "არჩევთი სათაური popup-თვის. ეს გამოიყენება დამხმარე ტექნოლოგიებისთვის."
           },
