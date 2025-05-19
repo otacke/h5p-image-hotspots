@@ -1,13 +1,13 @@
 /**
- * Defines the ImageHotspots.Popup class
+ * Defines the ImageHotspotsWorkseed.Popup class
  */
-(function ($, ImageHotspots, EventDispatcher) {
+(function ($, ImageHotspotsWorkseed, EventDispatcher) {
 
   /**
    * Creates new Popup instance
    *
    * @class
-   * @namespace H5P.ImageHotspots
+   * @namespace H5P.ImageHotspotsWorkseed
    * @param {H5P.jQuery} $container
    * @param {H5P.jQuery} $content
    * @param {number} x
@@ -19,7 +19,7 @@
    * @param {Object} options
    *
    */
-  ImageHotspots.Popup = function ($container, $content, x, y, hotspotWidth, header, className, fullscreen, options, legacy) {
+  ImageHotspotsWorkseed.Popup = function ($container, $content, x, y, hotspotWidth, header, className, fullscreen, options, legacy) {
     EventDispatcher.call(this);
 
     var self = this;
@@ -45,8 +45,8 @@
     }
 
     this.$popupBackground = $('<div/>', {
-      'class': 'h5p-image-hotspots-overlay',
-      'id': 'h5p-image-hotspots-overlay'
+      'class': 'h5p-image-hotspots-workseed-overlay',
+      'id': 'h5p-image-hotspots-workseed-overlay'
     });
 
     const headerID = `h5p-image-hotspot-popup-header-${H5P.createUUID()}`;
@@ -203,7 +203,7 @@
   };
 
   // Extends the event dispatcher
-  ImageHotspots.Popup.prototype = Object.create(EventDispatcher.prototype);
-  ImageHotspots.Popup.prototype.constructor = ImageHotspots.Popup;
+  ImageHotspotsWorkseed.Popup.prototype = Object.create(EventDispatcher.prototype);
+  ImageHotspotsWorkseed.Popup.prototype.constructor = ImageHotspotsWorkseed.Popup;
 
-})(H5P.jQuery, H5P.ImageHotspots, H5P.EventDispatcher);
+})(H5P.jQuery, H5P.ImageHotspotsWorkseed, H5P.EventDispatcher);

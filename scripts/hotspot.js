@@ -1,20 +1,20 @@
 /**
- * Defines the ImageHotspots.Hotspot class
+ * Defines the ImageHotspotsWorkseed.Hotspot class
  */
-(function ($, ImageHotspots) {
+(function ($, ImageHotspotsWorkseed) {
 
   /**
    * Creates a new Hotspot
    *
    * @class
-   * @namespace H5P.ImageHotspots
+   * @namespace H5P.ImageHotspotsWorkseed
    * @param  {Object} config
    * @param  {Object} options
    * @param  {number} id
    * @param  {boolean} isSmallDeviceCB
-   * @param  {H5P.ImageHotspots} parent
+   * @param  {H5P.ImageHotspotsWorkseed} parent
    */
-  ImageHotspots.Hotspot = function (config, options, id, isSmallDeviceCB, parent) {
+  ImageHotspotsWorkseed.Hotspot = function (config, options, id, isSmallDeviceCB, parent) {
     var self = this;
     this.config = config;
     this.visible = false;
@@ -37,7 +37,7 @@
 
     // Check if there is an iconImage that should be used instead of fontawesome icons to determine the html element.
     this.$element = $(iconImageExists ? '<img/>' : '<button/>', {
-      'class': 'h5p-image-hotspot ' +
+      'class': 'h5p-image-hotspot-workseed ' +
         (!iconImageExists ? 'h5p-image-hotspot-' + options.icon : '') +
         (config.position.legacyPositioning ? ' legacy-positioning' : ''),
       'role': 'button',
@@ -117,7 +117,7 @@
    * @public
    * @param {H5P.jQuery} $container
    */
-  ImageHotspots.Hotspot.prototype.appendTo = function ($container) {
+  ImageHotspotsWorkseed.Hotspot.prototype.appendTo = function ($container) {
     this.$container = $container;
     this.$element.appendTo($container);
   };
@@ -126,7 +126,7 @@
    * Display the popup
    * @param {boolean} [focusPopup] Focuses popup for keyboard accessibility
    */
-  ImageHotspots.Hotspot.prototype.showPopup = function (focusPopup) {
+  ImageHotspotsWorkseed.Hotspot.prototype.showPopup = function (focusPopup) {
     var self = this;
 
     // Create popup content:
@@ -202,7 +202,7 @@
     }
 
     // Create Image hot-spots popup
-    self.popup = new ImageHotspots.Popup(
+    self.popup = new ImageHotspotsWorkseed.Popup(
       self.$container, $popupBody,
       self.config.position.x,
       self.config.position.y,
@@ -271,7 +271,7 @@
     $('body').children().on('click.h5p-image-hotspot-popup', function (event) {
       var $target = $(event.target);
       if (self.visible && !$target.hasClass('h5p-enable-fullscreen') && !$target.hasClass('h5p-disable-fullscreen')
-        && event.target.id === 'h5p-image-hotspots-overlay') {
+        && event.target.id === 'h5p-image-hotspots-workseed-overlay') {
         self.hidePopup();
       }
     });
@@ -281,8 +281,8 @@
    * Toggle whether hotspots has tabindex
    * @param {boolean} [disable] Disable tabindex if true
    */
-  ImageHotspots.Hotspot.prototype.toggleHotspotsTabindex = function (disable) {
-    this.$container.find('.h5p-image-hotspot')
+  ImageHotspotsWorkseed.Hotspot.prototype.toggleHotspotsTabindex = function (disable) {
+    this.$container.find('.h5p-image-hotspot-workseed')
       .attr('tabindex', disable ? '-1' : '0')
       .attr('aria-hidden', disable ? true : '');
   };
@@ -291,7 +291,7 @@
    * Hide popup
    * @public
    */
-  ImageHotspots.Hotspot.prototype.hidePopup = function () {
+  ImageHotspotsWorkseed.Hotspot.prototype.hidePopup = function () {
     if (this.popup) {
       // We don't get click events on body for iOS-devices
       $('body').children().off('click.h5p-image-hotspot-popup');
@@ -315,17 +315,17 @@
   /**
    * Focus hotspot
    */
-  ImageHotspots.Hotspot.prototype.focus = function () {
+  ImageHotspotsWorkseed.Hotspot.prototype.focus = function () {
     this.$element.focus();
   };
 
   /**
    * Set up trapping of focus
    *
-   * @param {ImageHotspots.Hotspot} hotspot Hotspot that focus should be trapped to
+   * @param {ImageHotspotsWorkseed.Hotspot} hotspot Hotspot that focus should be trapped to
    * @param {boolean} [trapReverseTab] Traps when tabbing backwards
    */
-  ImageHotspots.Hotspot.prototype.setTrapFocusTo = function (hotspot, trapReverseTab) {
+  ImageHotspotsWorkseed.Hotspot.prototype.setTrapFocusTo = function (hotspot, trapReverseTab) {
     this.$element.on('keydown.trapfocus', function (e) {
       var keyCombination = e.which === 9 && (trapReverseTab ? e.shiftKey : !e.shiftKey);
       if (keyCombination) {
@@ -339,7 +339,7 @@
   /**
    * Release trap focus from hotspot
    */
-  ImageHotspots.Hotspot.prototype.releaseTrapFocus = function () {
+  ImageHotspotsWorkseed.Hotspot.prototype.releaseTrapFocus = function () {
     this.$element.off('keydown.trapfocus');
   };
 
@@ -347,9 +347,9 @@
    * Set title of hotspot element
    * @param {string} title Title to set for hotspot element
    */
-  ImageHotspots.Hotspot.prototype.setTitle = function (title) {
+  ImageHotspotsWorkseed.Hotspot.prototype.setTitle = function (title) {
     title = this.htmlDecode(title);
-    const index = this.$element.parent().find('.h5p-image-hotspot').index(this.$element);
+    const index = this.$element.parent().find('.h5p-image-hotspot-workseed').index(this.$element);
     const content = this.options.hotspots[index].content;
     let hasAudioVideo = false;
     for (let item of content) {
@@ -363,7 +363,7 @@
     this.$element.attr('aria-label', hasAudioVideo ? `${title}. ${this.options.containsAudioVideoLabel}` : title);
   };
 
-  ImageHotspots.Hotspot.prototype.pause = function () {
+  ImageHotspotsWorkseed.Hotspot.prototype.pause = function () {
     if (this.actionInstances) {
       this.actionInstances.forEach(function(actionInstance) {
         if (actionInstance.audio &&
@@ -380,9 +380,9 @@
    * @param {string} input String to decode characters
    * @returns {string} Decoded string
    */
-  ImageHotspots.Hotspot.prototype.htmlDecode = function (input) {
+  ImageHotspotsWorkseed.Hotspot.prototype.htmlDecode = function (input) {
     const dparser = new DOMParser().parseFromString(input, 'text/html');
     return dparser.documentElement.textContent;
   };
 
-})(H5P.jQuery, H5P.ImageHotspots);
+})(H5P.jQuery, H5P.ImageHotspotsWorkseed);

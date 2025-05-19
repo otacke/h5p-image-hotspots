@@ -1,5 +1,5 @@
 {
-  "title": "Image Hotspots",
+  "title": "Image Hotspots (workseed)",
   "description": "Add hotspots with useful information and media to an image.",
   "majorVersion": 1,
   "minorVersion": 10,
@@ -7,7 +7,7 @@
   "runnable": 1,
   "author": "Joubel",
   "license": "MIT",
-  "machineName": "H5P.ImageHotspots",
+  "machineName": "H5P.ImageHotspotsWorkseed",
   "fullscreen": 1,
   "coreApi": {
     "majorVersion": 1,

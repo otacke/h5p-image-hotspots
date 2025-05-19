@@ -1,7 +1,7 @@
 /**
- * Defines the H5P.ImageHotspots class
+ * Defines the H5P.ImageHotspotsWorkseed class
  */
-H5P.ImageHotspots = (function ($, EventDispatcher) {
+H5P.ImageHotspotsWorkseed = (function ($, EventDispatcher) {
 
   const DEFAULT_FONT_SIZE = 24;
 
@@ -14,7 +14,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
    * @param {Object} options
    * @param {number} id
    */
-  function ImageHotspots(options, id) {
+  function ImageHotspotsWorkseed(options, id) {
     EventDispatcher.call(this);
 
     // Extend defaults with provided options
@@ -61,8 +61,8 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
   }
 
   // Extends the event dispatcher
-  ImageHotspots.prototype = Object.create(EventDispatcher.prototype);
-  ImageHotspots.prototype.constructor = ImageHotspots;
+  ImageHotspotsWorkseed.prototype = Object.create(EventDispatcher.prototype);
+  ImageHotspotsWorkseed.prototype.constructor = ImageHotspotsWorkseed;
 
 
   /**
@@ -72,7 +72,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
    * @public
    * @param {H5P.jQuery} $container
    */
-  ImageHotspots.prototype.attach = function ($container) {
+  ImageHotspotsWorkseed.prototype.attach = function ($container) {
     var self = this;
     self.$container = $container;
 
@@ -86,10 +86,10 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
       $container.addClass('not-an-ios-device');
     }
 
-    $container.addClass('h5p-image-hotspots');
+    $container.addClass('h5p-image-hotspots-workseed');
 
     this.$hotspotContainer = $('<div/>', {
-      'class': 'h5p-image-hotspots-container'
+      'class': 'h5p-image-hotspots-workseed-container'
     });
 
     const maxNumberDigits = this.options.hotspots.length.toString().length;
@@ -99,7 +99,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
 
     if (this.options.image && this.options.image.path) {
       this.$image = $('<img/>', {
-        'class': 'h5p-image-hotspots-background',
+        'class': 'h5p-image-hotspots-workseed-background',
         src: H5P.getPath(this.options.image.path, this.id)
       }).appendTo(this.$hotspotContainer);
 
@@ -150,7 +150,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
 
     for (var i=0; i<numHotspots; i++) {
       try {
-        var hotspot = new ImageHotspots.Hotspot(this.options.hotspots[i], this.options, this.id, isSmallDevice, self);
+        var hotspot = new ImageHotspotsWorkseed.Hotspot(this.options.hotspots[i], this.options, this.id, isSmallDevice, self);
         hotspot.appendTo(this.$hotspotContainer);
         var hotspotTitle = this.options.hotspots[i].header ? this.options.hotspots[i].header
           : this.options.hotspotNumberLabel.replace('#num', (i + 1).toString());
@@ -197,7 +197,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
     observer.observe(this.$hotspotContainer.get(0));
   };
 
-  ImageHotspots.prototype.setShowingPopup = function (visible) {
+  ImageHotspotsWorkseed.prototype.setShowingPopup = function (visible) {
     this.$container.toggleClass('showing-popup', visible);
   };
 
@@ -206,7 +206,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
    *
    * @param {boolean} enable True to enable, otherwise will be released
    */
-  ImageHotspots.prototype.toggleTrapFocus = function (enable) {
+  ImageHotspotsWorkseed.prototype.toggleTrapFocus = function (enable) {
     if (this.hotspots.length < 1) {
       return;
     }
@@ -234,7 +234,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
    * @param {boolean} [e.forceImageHeight]
    * @param {boolean} [e.decreaseSize]
    */
-  ImageHotspots.prototype.resize = function (e) {
+  ImageHotspotsWorkseed.prototype.resize = function (e) {
     if (this.options.image === null) {
       return;
     }
@@ -302,7 +302,7 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
     self.isSmallDevice = (containerWidth / parseFloat($("body").css("font-size")) < 40);
   };
 
-  ImageHotspots.prototype.pause = function() {
+  ImageHotspotsWorkseed.prototype.pause = function() {
     this.hotspots.forEach(function(hotspot) {
       if (hotspot.pause) {
         hotspot.pause();
@@ -310,5 +310,5 @@ H5P.ImageHotspots = (function ($, EventDispatcher) {
     });
   };
 
-  return ImageHotspots;
+  return ImageHotspotsWorkseed;
 })(H5P.jQuery, H5P.EventDispatcher);
