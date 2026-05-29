@@ -1,47 +1,63 @@
 @charset "UTF-8";
 
 .h5p-image-hotspots {
-  background-color: #FFF;
-  color: #333;
+  background-color: var(--h5p-theme-ui-base);
+  color: var(--h5p-theme-text-primary);
+  font-size: var(--h5p-theme-font-size-xxl);
 }
 .h5p-image-hotspots .h5p-content-controls {
   transition: opacity 0.6s;
   opacity: 1;
 }
+.h5p-image-hotspots *:focus-visible {
+  outline: 2px ridge var(--h5p-theme-contrast-cta-white);
+  outline-offset: 2px;
+}
+
 .h5p-image-hotspots.showing-popup .h5p-content-controls {
   /* Hide the fullscreen button when there's an popup open */
   opacity: 0;
   pointer-events: none; /* Make sure it isn't clickable */
 }
 .h5p-image-hotspots-container {
+  --hotspot-number-font-size-1-digits: 0.75em;
+  --hotspot-number-font-size-2-digits: 0.6em;
+
+  counter-reset: hotspot;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
   width: auto;
   max-width: 100%;
-  background: #fff;
+  background: var(--h5p-theme-ui-base);
 }
 .h5p-image-hotspots-background {
   width: 100%;
 }
 .h5p-image-hotspot {
   position: absolute;
-  font-size: 1.2em;
-  height: 1.1666667em;
-  width: 1.1666667em;
+  box-sizing: border-box;
+  font-size: 1.3em;
+  height: 1.3em;
+  width: 1.3em; 
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: 0.7em;
-  -webkit-transition: all .2s ease-in-out;
+  border-radius: 3em;
   transition: all .2s ease-in-out;
-  background: #fff;
-  padding: 0;
+  background: var(--h5p-theme-ui-base);
+  padding: 0.2em;
   border: 1px solid transparent;
   margin: 0;
+  padding: var(--h5p-theme-spacing-xxs);
   cursor: pointer;
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.3);
+  box-shadow: 5px 4px 8px 0px rgb(0 0 0 / 36%);
+}
+
+.h5p-image-hotspot img {
+  width: 100%;
+  height: 100%;
 }
 
 .h5p-image-hotspot.disabled {
@@ -56,9 +72,8 @@
   z-index: 1;
 }
 
-.h5p-content:not(.using-mouse) .h5p-image-hotspot:focus {
-  outline: none;
-  border-color: #555;
+.h5p-image-hotspot:focus-visible {
+  border-color: var(--h5p-theme-contrast-cta-white);
 }
 
 .h5p-image-hotspot.active,
@@ -73,30 +88,37 @@
   transform: scale(1.5);
 }
 
-.h5p-image-hotspot:before {
-  font-family: H5PFontAwesome4;
+.h5p-image-hotspot::before {
+  font-family: h5p-theme;
 }
-.h5p-image-hotspot-plus:before {
-  content: '\f055';
+.h5p-image-hotspot-plus::before {
+  content: '\e920';
 }
-.h5p-image-hotspot-minus:before {
-  content: '\f056';
+.h5p-image-hotspot-minus::before {
+  content: '\e923';
 }
-.h5p-image-hotspot-times:before {
-  content: '\f057';
+.h5p-image-hotspot-times::before {
+  content: '\e921';
 }
-.h5p-image-hotspot-check:before {
-  content: '\f058';
+.h5p-image-hotspot-check::before {
+  content: '\e926';
 }
 /* Avoid collision with main class name of H5P.ImageHotspotQuestion */
-.h5p-image-hotspots .h5p-image-hotspot-question:before {
-  content: '\f059';
+.h5p-image-hotspots .h5p-image-hotspot-question::before {
+  content: '\e924';
 }
-.h5p-image-hotspot-info:before {
-  content: '\f05a';
+.h5p-image-hotspot-info::before {
+  content: '\e922';
 }
-.h5p-image-hotspot-exclamation:before {
-  content: '\f06a';
+.h5p-image-hotspot-exclamation::before {
+  content: '\e925';
+}
+.h5p-image-hotspot-number::before {
+  content: counter(hotspot);
+  counter-increment: hotspot;
+  font-family: inherit;
+  font-size: var(--hotspot-number-font-size, 0.75em);
+  font-weight: bold;
 }
 .h5p-image-hotspot-popup {
   position: absolute;
@@ -106,10 +128,10 @@
   padding: 0.3em;
   height: 100%;
   max-height: 100%;
-  background: white;
-  background: rgba(255,255,255);
-  border-radius: 3px;
-  box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
+  background: var(--h5p-theme-ui-base);
+  box-shadow: inset 0px 0px 4px 4px rgba(117, 128, 147, 0.10);
+  border-radius: var(--h5p-theme-border-radius-medium);
+  border: 2px solid var(--h5p-theme-stroke-1);
   box-sizing: border-box;
   transition: left 0.3s ease-in-out;
   cursor: auto;
@@ -117,6 +139,10 @@
 .h5p-image-hotspot-popup.popup-overflowing,
 .h5p-image-hotspot-popup.fullscreen-popup {
   border-radius: 0;
+}
+.h5p-image-hotspot-popup:focus-visible,
+.h5p-image-hotspot-popup-content:focus-visible {
+  border-radius: 4px;
 }
 
 .h5p-image-hotspot-has-header .h5p-image-hotspot-popup-body {
@@ -126,12 +152,11 @@
 .h5p-image-hotspot-popup-pointer {
   opacity: 0;
   position: absolute;
-  -webkit-transition: left .3s ease-in-out;
   transition: left .3s ease-in-out;
   width: 0;
   height: 0;
   border-top: 0.6em solid transparent;
-  border-left: 0.6em solid rgba(255,255,255);
+  border-left: 0.6em solid var(--h5p-theme-ui-base);
   border-bottom: 0.6em solid transparent;
   transform: translate(0, -50%);
   transition: transform 0.3s, opacity 0.2s;
@@ -158,7 +183,7 @@
   transform: translate(-1px, 0);
 }
 .h5p-image-hotspot-popup-pointer.visible.to-the-right {
-  border-right: 0.6em solid rgba(255,255,255);
+  border-right: 0.6em solid var(--h5p-theme-ui-base);
   border-left: none;
   transform: translate(calc(-100% + 1px), -50%);
 }
@@ -168,13 +193,13 @@
 .h5p-image-hotspot-popup-header {
   font-weight: bold;
   margin: 0;
-  padding: 1em 1.75em 0 1em;
+  padding: var(--h5p-theme-spacing-s) var(--h5p-theme-spacing-m) 0 var(--h5p-theme-spacing-s);
   margin-bottom: 0.5em;
   line-height: 1.1em;
 }
 .h5p-image-hotspot-popup-body {
-  padding: 1.333333em;
-  font-size: 0.75em;
+  padding: var(--h5p-theme-spacing-s);
+  font-size: var(--h5p-theme-font-size-m);
 }
 
 .h5p-text.h5p-image-hotspot-popup-body {
@@ -191,7 +216,7 @@
   overflow: auto;
 }
 /* Make the content fade out a bit if there's a scrollbar */
-.h5p-image-hotspot-popup-content.overflowing:after {
+.h5p-image-hotspot-popup-content.overflowing::after {
   content: '';
   width: calc(100% - 1em);
   height: 10em;
@@ -204,12 +229,13 @@
   pointer-events: none; /* Make things behind it clickable */
 }
 /* When scroll has been detected, remove the content fade-out */
-.h5p-image-hotspot-popup-content.overflowing.has-scrolled:after {
+.h5p-image-hotspot-popup-content.overflowing.has-scrolled::after {
   opacity: 0;
 }
 
 .h5p-image-hotspot-popup-content.h5p-image-hotspot-popup-content-no-header {
   padding-top: 0.35em;
+  padding-right: 1.5em;
 }
 
 .h5p-image-hotspot-popup-content::-webkit-scrollbar {
@@ -237,28 +263,26 @@
   position: absolute;
   top: 0.5em;
   right: 0.5em;
-  width: 2em;
-  height: 2em;
   border: 1px solid transparent;
   border-radius: 50%;
   font-size: 0.7em;
   padding: 0.8em;
   cursor: pointer;
-  background: #fff;
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJ2aXNpYmxlIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMyI+PGc+PHBhdGggeG1sbnM6ZGVmYXVsdD0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGQ9Ik0xOSA2LjQxTDE3LjU5IDUgMTIgMTAuNTkgNi40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkgMTkgMTcuNTkgMTMuNDEgMTJ6IiBzdHlsZT0iZmlsbDogcmdiKDAsIDAsIDApOyIgdmVjdG9yLWVmZmVjdD0ibm9uLXNjYWxpbmctc3Ryb2tlIi8+PC9nPjwvc3ZnPg==');
-  background-repeat: no-repeat;
-  background-size: 80% 80%;
-  background-position: center;
+  background-color: var(--h5p-theme-ui-base);
   transition: box-shadow 0.3s, border-color 0.3s;
+}
+.h5p-image-hotspot-close-popup-button::before {
+  color: var(--h5p-theme-text-primary);
+  font-family: 'h5p-theme';
+  content: '\e910';
+  
 }
 .h5p-image-hotspot-close-popup-button:hover,
 .h5p-image-hotspot-close-popup-button:focus {
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.4);
+   background-color: var(--h5p-theme-alternative-base);
 }
-.h5p-content:not(.using-mouse) .h5p-image-hotspot-close-popup-button:focus {
-  border-color: rgba(0,0,0,0.4);
-  outline: none;
+.h5p-image-hotspot-close-popup-button:focus-visible {
+  border-radius: 50%;
 }
 
 .h5p-image-hotspots-overlay {
@@ -267,7 +291,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  -webkit-transition: background .5s ease-in-out;
   transition: background .5s ease-in-out;
   background: transparent;
   z-index: 1;
@@ -291,8 +314,6 @@
 .h5p-image-hotspots.h5p-semi-fullscreen .h5p-image-hotspots-container {
   position: relative;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
